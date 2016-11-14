@@ -21,6 +21,7 @@ public class PaprikaMethod extends Entity{
     private ArrayList<PaprikaMessage> paprikaMessages;
     private int numberOfLines;
     private int cyclomaticComplexity;
+    private ArrayList<Entity> nestedEntities;
 
     private PaprikaMethod(String name, String returnType, PaprikaClass paprikaClass, boolean isFunction, boolean isStatic) {
         this.setName(name);
@@ -28,6 +29,7 @@ public class PaprikaMethod extends Entity{
         this.usedVariables = new HashSet<>(0);
         this.calledMethods = new HashSet<>(0);
         this.arguments = new ArrayList<>(0);
+        nestedEntities= new ArrayList<>();
         this.returnType = returnType;
         this.isFunction = isFunction;
         this.isStatic = isStatic;
@@ -162,5 +164,13 @@ public class PaprikaMethod extends Entity{
 
     public void setCyclomaticComplexity(int cyclomaticComplexity) {
         this.cyclomaticComplexity = cyclomaticComplexity;
+    }
+
+    public ArrayList<Entity> getNestedEntities() {
+        return nestedEntities;
+    }
+
+    public void addNestedEntity(Entity nestedEntity) {
+        this.nestedEntities.add(nestedEntity);
     }
 }

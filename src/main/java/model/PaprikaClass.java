@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * Created by Sarra on 03/10/2016.
+ */
 public class PaprikaClass extends Entity{
     private PaprikaApp paprikaApp;
-    private PaprikaClass parent;
-    //parent name to cover library case
-    private String parentName;
     private int complexity;
-    private int children;
     private Set<PaprikaClass> coupled;
     private Set<PaprikaMethod> paprikaMethods;
     private Set<PaprikaVariable> paprikaVariables;
@@ -24,8 +22,7 @@ public class PaprikaClass extends Entity{
     private boolean isInteractor;
     private boolean isRouter;
     private boolean isPresenter;
-    private PaprikaClassTypes type;
-    private ArrayList<PaprikaExtension> extensions;
+    private ArrayList<PaprikaClass> nestedClasses;
 
     public Set<PaprikaVariable> getPaprikaVariables() {
         return paprikaVariables;
@@ -35,26 +32,18 @@ public class PaprikaClass extends Entity{
         return paprikaMethods;
     }
 
-    public String getParentName() {
-        return parentName;
-    }
 
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
 
-    private PaprikaClass(String name, PaprikaApp paprikaApp) {
+    protected PaprikaClass(String name, PaprikaApp paprikaApp) {
         this.setName(name);
         this.paprikaApp = paprikaApp;
         this.complexity = 0;
-        this.children = 0;
         this.paprikaMethods  = new HashSet<>(0);
         this.paprikaVariables = new HashSet<>(0);
         this.coupled = new HashSet<>();
         this.interfaces = new HashSet<>();
         this.interfacesNames = new ArrayList<>(0);
-        this.parentName = null;
-        extensions=new ArrayList<>();
+        this.nestedClasses = new ArrayList<>();
         this.modifier = PaprikaModifiers.PUBLIC; // The default visibility is Public
         numberOfLinesOfCode=0;
         //check if it's a ViewController or an AppDelegate
@@ -78,26 +67,13 @@ public class PaprikaClass extends Entity{
         //TODO add the private class case
     }
 
-    public static PaprikaClass createPaprikaClass(String name, PaprikaApp paprikaApp) {
-        PaprikaClass paprikaClass = new PaprikaClass(name, paprikaApp);
-        paprikaApp.addPaprikaClass(paprikaClass);
-        return paprikaClass;
-    }
-    public static PaprikaClass createPaprikaClass(String name,PaprikaClassTypes type, PaprikaApp paprikaApp) {
-        PaprikaClass paprikaClass = new PaprikaClass(name, paprikaApp);
-        paprikaApp.addPaprikaClass(paprikaClass);
-        paprikaClass.type =type;
-        return paprikaClass;
-    }
-    public PaprikaClass getParent() {
-        return parent;
-    }
+
+
+
 
     public Set<PaprikaClass> getInterfaces(){ return interfaces;}
 
-    public void setParent(PaprikaClass parent) {
-        this.parent = parent;
-    }
+
 
     public void addPaprikaMethod(PaprikaMethod paprikaMethod){
         paprikaMethods.add(paprikaMethod);
@@ -114,19 +90,13 @@ public class PaprikaClass extends Entity{
     public void addComplexity(int value){
         complexity += value;
     }
-
-    public void addChildren() { children += 1;}
-
     public int getComplexity() {
         return complexity;
     }
-
-    public int getChildren() { return children; }
-
-    public void coupledTo(PaprikaClass paprikaClass){
-        if(paprikaClass!= this)
+    public void coupledTo(PaprikaClass paprikaBasicClass){
+        if(paprikaBasicClass!= this)
         {
-            coupled.add(paprikaClass);
+            coupled.add(paprikaBasicClass);
         }
     }
 
@@ -235,21 +205,11 @@ public class PaprikaClass extends Entity{
         return isPresenter;
     }
 
-    public PaprikaClassTypes getType() {
-        return type;
+    public ArrayList<PaprikaClass> getNestedClasses() {
+        return nestedClasses;
     }
 
-    public void setType(PaprikaClassTypes type) {
-        this.type = type;
+    public void addNestedClass(PaprikaClass paprikaClass){
+        this.nestedClasses.add(paprikaClass);
     }
-
-    public ArrayList<PaprikaExtension> getExtensions() {
-        return extensions;
-    }
-
-    public void addPaprikaExtension(PaprikaExtension paprikaExtension){
-        this.extensions.add(paprikaExtension);
-    }
-
-
 }

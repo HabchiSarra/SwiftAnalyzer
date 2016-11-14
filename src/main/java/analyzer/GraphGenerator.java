@@ -1,12 +1,7 @@
 package analyzer;
 
-import model.PaprikaApp;
-import model.PaprikaClass;
-import model.PaprikaClassTypes;
-import model.PaprikaMethod;
-import org.antlr.v4.runtime.misc.NotNull;
+import model.*;
 import parser.SwiftBaseListener;
-import parser.SwiftParser;
 
 import java.util.Stack;
 
@@ -27,9 +22,10 @@ public class GraphGenerator extends SwiftBaseListener {
 
     public void buildClassDiagram(){
         for(PaprikaClass paprikaClass: this.app.getPaprikaClasses()){
-            if(paprikaClass.getType()== PaprikaClassTypes.CLASS){
-                handleClassInheritance(paprikaClass);
-            }else{//Enums interfaces or structs
+            if((paprikaClass instanceof PaprikaBasicClass  )&& ((PaprikaBasicClass) paprikaClass ).getType()
+                    == PaprikaClassTypes.CLASS){
+                handleClassInheritance((PaprikaBasicClass) paprikaClass );
+            }else{//Enums, interfaces, structs or extensions
                 for(String name: paprikaClass.getInterfacesNames()){
                     PaprikaClass implementedInterface= getClass(name);
                     if(implementedInterface!=null){
@@ -41,11 +37,20 @@ public class GraphGenerator extends SwiftBaseListener {
                 }
 
             }
+            //link extensions
+            if(paprikaClass instanceof PaprikaExtension){
+                for(PaprikaClass classe: this.app.getPaprikaClasses()){
+                    if(classe instanceof PaprikaBasicClass && classe.getName().equals(paprikaClass.getName())){
+                        ((PaprikaExtension) paprikaClass).setExtendedClass((PaprikaBasicClass) classe);
+                    }
+                }
+            }
+
         }
     }
     PaprikaClass getClass(PaprikaClassTypes type, String name){//returns null if unfound
         for(PaprikaClass paprikaClass: this.app.getPaprikaClasses()){
-            if(paprikaClass.getType() == type && paprikaClass.getName().equals(name)){
+            if(((PaprikaBasicClass) paprikaClass ).getType()== type && paprikaClass.getName().equals(name)){
                 return paprikaClass;
             }
         }
@@ -61,15 +66,25 @@ public class GraphGenerator extends SwiftBaseListener {
         return null;
     }
 
-    public void handleClassInheritance(PaprikaClass paprikaClass){
-        //TODO how to distinguish the inheritance from the implementation
+    public void handleClassInheritance(PaprikaBasicClass paprikaClass){
+        int i = 0;
         for(String name: paprikaClass.getInterfacesNames()){
-            PaprikaClass implementedInterface= getClass(name);
-            if(implementedInterface!=null){
-                paprikaClass.implement(implementedInterface);
+            PaprikaClass motherClass= getClass(name);
+            if(motherClass!=null){
+                if(i==0 && motherClass instanceof PaprikaBasicClass && ((PaprikaBasicClass)motherClass).
+                        getType()!= PaprikaClassTypes.INTERFACE)
+                {
+                    //it's an inheritance
+                    paprikaClass.setParent(motherClass);
+                    paprikaClass.getInterfacesNames().remove(name);
+
+                }else{
+                    paprikaClass.implement(motherClass);
+                }
             }else{
                 //TODO create an external class or no? if no: the NOI will be wrong
             }
+            i++;
         }
     }
 
