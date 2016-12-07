@@ -88,6 +88,6 @@ public class PaprikaApp extends Entity{
     }
 
     public void addPaprikaExtension(PaprikaExtension paprikaExtension){
-        this.paprikaExtensions.add(paprikaExtension);
+        this.paprikaClasses.add(paprikaExtension);
     }
 }

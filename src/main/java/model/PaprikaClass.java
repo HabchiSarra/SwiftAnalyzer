@@ -8,21 +8,21 @@ import java.util.Set;
  * Created by Sarra on 03/10/2016.
  */
 public class PaprikaClass extends Entity{
-    private PaprikaApp paprikaApp;
-    private int complexity;
-    private Set<PaprikaClass> coupled;
-    private Set<PaprikaMethod> paprikaMethods;
-    private Set<PaprikaVariable> paprikaVariables;
-    private Set<PaprikaClass> interfaces;
-    private ArrayList<String> interfacesNames;
-    private PaprikaModifiers modifier ;
-    private boolean isAppDelegate;
-    private boolean isViewController;
-    private int numberOfLinesOfCode;
-    private boolean isInteractor;
-    private boolean isRouter;
-    private boolean isPresenter;
-    private ArrayList<PaprikaClass> nestedClasses;
+    protected PaprikaApp paprikaApp;
+    protected int complexity;
+    protected Set<PaprikaClass> coupled;
+    protected Set<PaprikaMethod> paprikaMethods;
+    protected Set<PaprikaVariable> paprikaVariables;
+    protected Set<PaprikaClass> interfaces;
+    protected ArrayList<String> interfacesNames;
+    protected PaprikaModifiers modifier ;
+    protected boolean isAppDelegate;
+    protected boolean isViewController;
+    protected int numberOfLinesOfCode;
+    protected boolean isInteractor;
+    protected boolean isRouter;
+    protected boolean isPresenter;
+    protected ArrayList<PaprikaClass> nestedClasses;
 
     public Set<PaprikaVariable> getPaprikaVariables() {
         return paprikaVariables;
@@ -37,12 +37,12 @@ public class PaprikaClass extends Entity{
     protected PaprikaClass(String name, PaprikaApp paprikaApp) {
         this.setName(name);
         this.paprikaApp = paprikaApp;
-        this.complexity = 0;
-        this.paprikaMethods  = new HashSet<>(0);
-        this.paprikaVariables = new HashSet<>(0);
+        this.complexity = 1;
+        this.paprikaMethods  = new HashSet<>();
+        this.paprikaVariables = new HashSet<>();
         this.coupled = new HashSet<>();
         this.interfaces = new HashSet<>();
-        this.interfacesNames = new ArrayList<>(0);
+        this.interfacesNames = new ArrayList<>();
         this.nestedClasses = new ArrayList<>();
         this.modifier = PaprikaModifiers.PUBLIC; // The default visibility is Public
         numberOfLinesOfCode=0;

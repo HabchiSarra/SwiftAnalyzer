@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class PaprikaBasicClass extends PaprikaClass{
@@ -22,6 +23,15 @@ public class PaprikaBasicClass extends PaprikaClass{
         super( name, paprikaApp);
         this.children = 0;
         this.parentName = null;
+      /*  this.complexity = 0;
+        this.paprikaMethods  = new HashSet<>(0);
+        this.paprikaVariables = new HashSet<>(0);
+        this.coupled = new HashSet<>();
+        this.interfaces = new HashSet<>();
+        this.interfacesNames = new ArrayList<>(0);
+        this.nestedClasses = new ArrayList<>();
+        this.modifier = PaprikaModifiers.PUBLIC; // The default visibility is Public*/
+        numberOfLinesOfCode=0;
         extensions=new ArrayList<>();
            }
     public static PaprikaBasicClass createPaprikaBasicClass(String name, PaprikaApp paprikaApp) {

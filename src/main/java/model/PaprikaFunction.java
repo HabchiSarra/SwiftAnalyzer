@@ -9,6 +9,7 @@ public class PaprikaFunction extends Entity {
     private PaprikaApp paprikaApp;
     private String returnType;
     private ArrayList<Entity> nestedEntities;
+    private int numberOfLines =0;
 
     private PaprikaFunction(String name , String returnType, PaprikaApp paprikaApp) {
         this.name = name;
@@ -44,5 +45,13 @@ public class PaprikaFunction extends Entity {
 
     public void addNestedEntity(Entity nestedEntity) {
         this.nestedEntities.add(nestedEntity);
+    }
+
+    public int getNumberOfLines() {
+        return numberOfLines;
+    }
+
+    public void setNumberOfLines(int numberOfLines) {
+        this.numberOfLines = numberOfLines;
     }
 }

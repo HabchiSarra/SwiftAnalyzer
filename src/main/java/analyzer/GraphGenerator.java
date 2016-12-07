@@ -68,24 +68,27 @@ public class GraphGenerator extends SwiftBaseListener {
 
     public void handleClassInheritance(PaprikaBasicClass paprikaClass){
         int i = 0;
+        System.out.println("The concerned class is: "+ paprikaClass.getName());
         for(String name: paprikaClass.getInterfacesNames()){
             PaprikaClass motherClass= getClass(name);
             if(motherClass!=null){
-                if(i==0 && motherClass instanceof PaprikaBasicClass && ((PaprikaBasicClass)motherClass).
+              /*  if(i==0 && motherClass instanceof PaprikaBasicClass && ((PaprikaBasicClass)motherClass).
                         getType()!= PaprikaClassTypes.INTERFACE)
                 {
                     //it's an inheritance
                     paprikaClass.setParent(motherClass);
                     paprikaClass.getInterfacesNames().remove(name);
 
-                }else{
+                }else{*/
                     paprikaClass.implement(motherClass);
-                }
+               // }
             }else{
                 //TODO create an external class or no? if no: the NOI will be wrong
             }
             i++;
         }
+
+        System.out.println("End of the method");
     }
 
 
