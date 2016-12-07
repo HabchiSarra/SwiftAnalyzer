@@ -13,6 +13,7 @@ public class PaprikaApp extends Entity{
     private ArrayList<PaprikaExtension> paprikaExtensions;
     private String category;
     private String appKey;
+    private boolean callsSynchronous;
     private PaprikaApp(String name, String category, String appKey) {
         this.name = name;
         this.category=category;
@@ -22,6 +23,7 @@ public class PaprikaApp extends Entity{
         paprikaGlobalVariables = new ArrayList<>();
         paprikaFunctions = new ArrayList<>();
         paprikaExtensions=new ArrayList<>();
+        callsSynchronous=false;
     }
 
 
@@ -89,5 +91,13 @@ public class PaprikaApp extends Entity{
 
     public void addPaprikaExtension(PaprikaExtension paprikaExtension){
         this.paprikaClasses.add(paprikaExtension);
+    }
+
+    public boolean isCallsSynchronous() {
+        return callsSynchronous;
+    }
+
+    public void setCallsSynchronous(boolean callsSynchronous) {
+        this.callsSynchronous = callsSynchronous;
     }
 }

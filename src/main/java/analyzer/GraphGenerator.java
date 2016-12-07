@@ -68,7 +68,7 @@ public class GraphGenerator extends SwiftBaseListener {
 
     public void handleClassInheritance(PaprikaBasicClass paprikaClass){
         int i = 0;
-        System.out.println("The concerned class is: "+ paprikaClass.getName());
+     //   System.out.println("The concerned class is: "+ paprikaClass.getName());
         for(String name: paprikaClass.getInterfacesNames()){
             PaprikaClass motherClass= getClass(name);
             if(motherClass!=null){
@@ -88,7 +88,7 @@ public class GraphGenerator extends SwiftBaseListener {
             i++;
         }
 
-        System.out.println("End of the method");
+     //   System.out.println("End of the method");
     }
 
 

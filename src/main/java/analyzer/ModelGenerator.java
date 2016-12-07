@@ -583,5 +583,30 @@ public class ModelGenerator extends SwiftBaseListener {
             PaprikaMethod.createPaprikaMethod(ctx.functionName().identifier().getText(),"null",this.classStack.peek(),false,false);
         }
 
+
+    }
+
+  /*  @Override public void enterSuperclassMethodExpression(@NotNull SwiftParser.SuperclassMethodExpressionContext ctx) {
+        if(ctx.identifier()!=null && !this.classStack.isEmpty()){
+
+        }
+    }*/
+
+    @Override public void enterFunctionCallExpression(@NotNull SwiftParser.FunctionCallExpressionContext ctx) {
+        if(!this.methodStack.isEmpty()){
+           // System.out.println("Le troisieme "+ctx.postfixExpression().getChild(2).getClass().getName());
+            if(ctx.postfixExpression()!=null && ctx.postfixExpression().getChildCount()==3 &&
+                    ctx.postfixExpression().getChild(2) instanceof SwiftParser.IdentifierContext){
+                    String text =((SwiftParser.IdentifierContext)ctx.postfixExpression().getChild(2)).getText();
+              /*  System.out.println("the 2nd: "+((SwiftParser.PrimaryContext)ctx.postfixExpression().
+                        getChild(0)).primaryExpression().getChild(1).getClass().getName());*/
+              //  String functionName =((SwiftParser.ExplicitMemberExpression2Context) ctx.postfixExpression().getChild(0)).identifier().getText();
+              //  System.out.println("*************** "+ functionName+" ******************");
+                //System.out.println("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO "+ text);
+                if(text.equals("sendSynchronousRequest")){
+                    this.app.setCallsSynchronous(true);
+                }
+            }
+        }
     }
 }

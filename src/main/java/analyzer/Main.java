@@ -34,7 +34,7 @@ public class Main {
         filesContents = new HashMap<>();
         headersContents = new HashMap<>();
         //The file path is hard-coded to avoid reading from System.in which is quite complicated with gradle
-        final File f = new File("C:\\Users\\Sarra\\Desktop\\Swift-Files");
+        final File f = new File("C:\\Users\\Sarra\\Desktop\\Electric Objects");
         String fileContent;
         SwiftLexer lexer;
         CommonTokenStream tokens;
@@ -61,17 +61,18 @@ public class Main {
                 tokens = new CommonTokenStream(lexer);
                 parser = new SwiftParser(tokens);
                 tree = parser.topLevel();
-            /*    walker = new ParseTreeWalker();
-                walker.walk(modelGenerator, tree);*/
-                astPrinter.print((RuleContext)tree);
+                walker = new ParseTreeWalker();
+                walker.walk(modelGenerator, tree);
+
+                //astPrinter.print((RuleContext)tree);
 
 
 
-          //  modelGenerator.reInit();
+            modelGenerator.reInit();
         }
-    /*    GraphGenerator graphGenerator=new GraphGenerator(modelGenerator.app);
+        GraphGenerator graphGenerator=new GraphGenerator(modelGenerator.app);
         graphGenerator.buildClassDiagram();
-        showModel(graphGenerator.app);*/
+        showModel(graphGenerator.app);
 
     }
 
@@ -81,6 +82,7 @@ public class Main {
     }
 
     public static void showModel(PaprikaApp app){
+        System.out.println("App: "+ app.getName() +" categorie "+ app.getCategory()+" calls synchronous "+ app.isCallsSynchronous());
         for(PaprikaClass paprikaClass: app.getPaprikaClasses()){
 
             if(paprikaClass instanceof PaprikaBasicClass){
