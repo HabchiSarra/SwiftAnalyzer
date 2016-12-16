@@ -22,6 +22,8 @@ public class PaprikaMethod extends Entity{
     private int numberOfLines;
     private int cyclomaticComplexity;
     private ArrayList<Entity> nestedEntities;
+    private boolean isInit;
+    private boolean isDeinit;
 
     private PaprikaMethod(String name, String returnType, PaprikaClass paprikaClass, boolean isFunction, boolean isStatic) {
         this.setName(name);
@@ -38,6 +40,13 @@ public class PaprikaMethod extends Entity{
         this.paprikaMessages = new ArrayList<>(0);
         numberOfLines= 0 ;
         cyclomaticComplexity=1;
+        isInit=false;
+        isDeinit=false;
+        if(name.toLowerCase().equals("init")){
+            this.isInit =true;
+        }else if(name.toLowerCase().equals("deinit")){
+            this.isDeinit=true;
+        }
     }
 
     public static PaprikaMethod createPaprikaMethod(String name, String returnType,  PaprikaClass paprikaClass, boolean isFunction, boolean isStatic) {
@@ -159,12 +168,13 @@ public class PaprikaMethod extends Entity{
     }
 
     public int getCyclomaticComplexity() {
-        return cyclomaticComplexity;
+        return this.cyclomaticComplexity;
+    }
+    public void addComplexity(int cyclomaticComplexity){
+        this.cyclomaticComplexity = this.cyclomaticComplexity+cyclomaticComplexity;
+        System.out.println("cplx: "+ this.cyclomaticComplexity);
     }
 
-    public void setCyclomaticComplexity(int cyclomaticComplexity) {
-        this.cyclomaticComplexity = cyclomaticComplexity;
-    }
 
     public ArrayList<Entity> getNestedEntities() {
         return nestedEntities;
@@ -172,5 +182,13 @@ public class PaprikaMethod extends Entity{
 
     public void addNestedEntity(Entity nestedEntity) {
         this.nestedEntities.add(nestedEntity);
+    }
+
+    public boolean isInit() {
+        return isInit;
+    }
+
+    public boolean isDeinit() {
+        return isDeinit;
     }
 }

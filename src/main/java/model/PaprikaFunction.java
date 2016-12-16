@@ -10,12 +10,14 @@ public class PaprikaFunction extends Entity {
     private String returnType;
     private ArrayList<Entity> nestedEntities;
     private int numberOfLines =0;
+    private int complexity;
 
     private PaprikaFunction(String name , String returnType, PaprikaApp paprikaApp) {
         this.name = name;
         this.paprikaApp = paprikaApp;
         this.returnType = returnType;
         nestedEntities=new ArrayList<>();
+        this.complexity=1;
     }
 
     public static PaprikaFunction createPaprikaFunction(String name , String returnType, PaprikaApp paprikaApp){
@@ -54,4 +56,12 @@ public class PaprikaFunction extends Entity {
     public void setNumberOfLines(int numberOfLines) {
         this.numberOfLines = numberOfLines;
     }
+
+    public int getCyclomaticComplexity() {
+        return complexity;
+    }
+    public void addComplexity(int cyclomaticComplexity){
+        this.complexity =+ cyclomaticComplexity;
+    }
+
 }

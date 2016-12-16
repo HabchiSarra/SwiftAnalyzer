@@ -129,6 +129,8 @@ public class ModelGenerator extends SwiftBaseListener {
 
             if(!classStack.isEmpty()){//It is a method
                 PaprikaMethod paprikaMethod =PaprikaMethod.createPaprikaMethod(functionName, returnType,classStack.peek(),false,staticFunc);
+                //update complexity
+                classStack.peek().addComplexity(1);
                 //check if it's a nested method
                 if(!methodStack.isEmpty() ){
                     //check if it's not a nested class
@@ -518,62 +520,113 @@ public class ModelGenerator extends SwiftBaseListener {
     }
 
     @Override public void enterIfStatement(@NotNull SwiftParser.IfStatementContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && (this.methodStack.peek() instanceof PaprikaMethod)){
+            System.out.println("The method is: "+ ((PaprikaMethod)this.methodStack.peek()).getName());
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterThrowStatement(@NotNull SwiftParser.ThrowStatementContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterForInStatement(@NotNull SwiftParser.ForInStatementContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterWhileStatement(@NotNull SwiftParser.WhileStatementContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && (this.methodStack.peek() instanceof PaprikaMethod)){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterGuardStatement(@NotNull SwiftParser.GuardStatementContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterSwitchCases(@NotNull SwiftParser.SwitchCasesContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterCaseCondition(@NotNull SwiftParser.CaseConditionContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterBreakStatement(@NotNull SwiftParser.BreakStatementContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterContinueStatement(@NotNull SwiftParser.ContinueStatementContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 
     @Override public void enterCatchClause(@NotNull SwiftParser.CatchClauseContext ctx) {
-        if(this.classStack.peek()!=null){
+        if(!this.classStack.isEmpty()){
             this.classStack.peek().addComplexity(1);
+        }
+        if(!this.methodStack.isEmpty()  && this.methodStack.peek() instanceof PaprikaMethod){
+            ((PaprikaMethod)this.methodStack.peek()).addComplexity(1);
+        }else if(!this.methodStack.isEmpty() &&  this.methodStack.peek() instanceof PaprikaFunction){
+            ((PaprikaFunction)this.methodStack.peek()).addComplexity(1);
         }
     }
 

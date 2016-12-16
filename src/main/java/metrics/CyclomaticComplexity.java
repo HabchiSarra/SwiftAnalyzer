@@ -1,5 +1,6 @@
 package metrics;
 
+import model.Entity;
 import model.PaprikaMethod;
 
 /**
@@ -7,16 +8,17 @@ import model.PaprikaMethod;
  */
 public class CyclomaticComplexity extends UnaryMetric<Integer> {
 
-    private CyclomaticComplexity(PaprikaMethod paprikaMethod, int value) {
+    private CyclomaticComplexity(Entity paprikaMethod, int value) {
         this.value = value;
         this.entity = paprikaMethod;
         this.name = "cyclomatic_complexity";
+        System.out.println("value::::::::::::  "+this.value+"  method:: "+paprikaMethod.getName());
     }
 
-    public static CyclomaticComplexity createCyclomaticComplexity(PaprikaMethod paprikaMethod, int value) {
+    public static CyclomaticComplexity createCyclomaticComplexity(Entity paprikaMethod, int value) {
+
         CyclomaticComplexity cyclomaticComplexity =  new CyclomaticComplexity(paprikaMethod, value);
         cyclomaticComplexity.updateEntity();
-        paprikaMethod.getPaprikaClass().addComplexity(value);
         return cyclomaticComplexity;
     }
 

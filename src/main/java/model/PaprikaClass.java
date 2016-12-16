@@ -37,7 +37,7 @@ public class PaprikaClass extends Entity{
     protected PaprikaClass(String name, PaprikaApp paprikaApp) {
         this.setName(name);
         this.paprikaApp = paprikaApp;
-        this.complexity = 1;
+        this.complexity = 0;
         this.paprikaMethods  = new HashSet<>();
         this.paprikaVariables = new HashSet<>();
         this.coupled = new HashSet<>();

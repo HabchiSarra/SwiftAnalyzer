@@ -1,6 +1,8 @@
 package analyzer;
 
+import metrics.MetricsCalculator;
 import model.*;
+import neo4j.ModelToGraph;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RuleContext;
@@ -72,7 +74,10 @@ public class Main {
         }
         GraphGenerator graphGenerator=new GraphGenerator(modelGenerator.app);
         graphGenerator.buildClassDiagram();
-        showModel(graphGenerator.app);
+        //showModel(graphGenerator.app);
+        MetricsCalculator.calculateAppMetrics(modelGenerator.app);
+        ModelToGraph modelToGraph = new ModelToGraph("BDD-Swift");
+        modelToGraph.insertApp(modelGenerator.app);
 
     }
 

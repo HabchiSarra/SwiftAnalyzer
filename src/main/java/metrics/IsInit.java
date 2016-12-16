@@ -8,14 +8,14 @@ import model.PaprikaMethod;
 
 public class IsInit extends UnaryMetric<Boolean> {
 
-    private IsInit(PaprikaMethod entity, boolean value) {
-        this.value = value;
+    private IsInit(PaprikaMethod entity) {
+        this.value = true;
         this.entity = entity;
         this.name = "is_init";
     }
 
-    public static IsInit createIsInit(PaprikaMethod entity, boolean value) {
-        IsInit isInit = new IsInit(entity, value);
+    public static IsInit createIsInit(PaprikaMethod entity) {
+        IsInit isInit = new IsInit(entity);
         isInit.updateEntity();
         return isInit;
     }
